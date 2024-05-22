@@ -136,9 +136,12 @@ const nullHexs = [
         "PUT"
     ];
 
+var proxyFile = "proxies.txt";
+var proxies = readLines(proxyFile);
 var proxyFile = "proxy.txt";
 var proxies = readLines(proxyFile);
 var userAgents = readLines("ua.txt");
+var userAgents = readLines("us.txt");
 
 const args = {
     target: process.argv[2],
